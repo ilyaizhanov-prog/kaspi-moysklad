@@ -1,0 +1,6 @@
+kaspi_moysklad_sync/config.py
+kaspi_moysklad_sync/kaspi_feed.xml
+kaspi_moysklad_sync/kaspi_images/
+publish/
+__pycache__/
+*.pyc

@@ -1,0 +1,40 @@
+name: Sync Kaspi orders to MoySklad
+
+# Запускается каждые 10 минут, забирает новые заказы из Kaspi и создаёт их
+# в МойСклад. Можно запустить и вручную - кнопка "Run workflow" на вкладке
+# Actions в репозитории.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        working-directory: kaspi_moysklad_sync
+        run: pip install -r requirements.txt
+
+      - name: Prepare config
+        working-directory: kaspi_moysklad_sync
+        run: cp config.example.py config.py
+
+      - name: Import new orders
+        working-directory: kaspi_moysklad_sync
+        env:
+          MOYSKLAD_LOGIN: ${{ secrets.MOYSKLAD_LOGIN }}
+          MOYSKLAD_PASSWORD: ${{ secrets.MOYSKLAD_PASSWORD }}
+          MOYSKLAD_TOKEN: ${{ secrets.MOYSKLAD_TOKEN }}
+          MOYSKLAD_ORGANIZATION_ID: ${{ secrets.MOYSKLAD_ORGANIZATION_ID }}
+          MOYSKLAD_DEFAULT_STORE_ID: ${{ secrets.MOYSKLAD_DEFAULT_STORE_ID }}
+          MOYSKLAD_DEFAULT_AGENT_ID: ${{ secrets.MOYSKLAD_DEFAULT_AGENT_ID }}
+          MOYSKLAD_AGENT_GROUP_ID: ${{ secrets.MOYSKLAD_AGENT_GROUP_ID }}
+          KASPI_SALES_API_TOKEN: ${{ secrets.KASPI_SALES_API_TOKEN }}
+        run: python import_orders_from_kaspi.py

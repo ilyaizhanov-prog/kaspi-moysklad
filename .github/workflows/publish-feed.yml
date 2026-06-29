@@ -1,0 +1,58 @@
+name: Publish Kaspi feed and images
+
+# Запускается каждые 20 минут и публикует kaspi_feed.xml + фото товаров
+# на GitHub Pages. Можно запустить и вручную - кнопка "Run workflow"
+# на вкладке Actions в репозитории.
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        working-directory: kaspi_moysklad_sync
+        run: pip install -r requirements.txt
+
+      - name: Prepare config
+        working-directory: kaspi_moysklad_sync
+        run: cp config.example.py config.py
+
+      - name: Generate price list and images
+        working-directory: kaspi_moysklad_sync
+        env:
+          MOYSKLAD_LOGIN: ${{ secrets.MOYSKLAD_LOGIN }}
+          MOYSKLAD_PASSWORD: ${{ secrets.MOYSKLAD_PASSWORD }}
+          MOYSKLAD_TOKEN: ${{ secrets.MOYSKLAD_TOKEN }}
+          MOYSKLAD_ORGANIZATION_ID: ${{ secrets.MOYSKLAD_ORGANIZATION_ID }}
+          MOYSKLAD_DEFAULT_STORE_ID: ${{ secrets.MOYSKLAD_DEFAULT_STORE_ID }}
+          STORE_MAP_JSON: ${{ secrets.STORE_MAP_JSON }}
+          KASPI_SALES_API_TOKEN: ${{ secrets.KASPI_SALES_API_TOKEN }}
+          KASPI_SALES_MERCHANT_ID: ${{ secrets.KASPI_SALES_MERCHANT_ID }}
+          KASPI_COMPANY_NAME: ${{ secrets.KASPI_COMPANY_NAME }}
+          KASPI_IMAGES_BASE_URL: ${{ secrets.KASPI_IMAGES_BASE_URL }}
+          KASPI_FEED_FILE_PATH: ../publish/kaspi_feed.xml
+          KASPI_IMAGES_DIR: ../publish/kaspi_images
+        run: |
+          mkdir -p ../publish/kaspi_images
+          python export_stock_to_kaspi.py
+          python export_images_to_kaspi.py
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish
+          publish_branch: gh-pages
+          keep_files: false
