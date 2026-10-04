@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<kaspi_catalog xmlns="kaspiShopping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" date="2026-10-04 02:44:20" xsi:schemaLocation="kaspiShopping http://kaspi.kz/kaspishopping.xsd">
+<kaspi_catalog xmlns="kaspiShopping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" date="2026-10-04 09:25:45" xsi:schemaLocation="kaspiShopping http://kaspi.kz/kaspishopping.xsd">
   <company>Ustel</company>
   <merchantid>Ustel</merchantid>
   <offers>
@@ -18,6 +18,14 @@
         <availability available="yes" storeId="PP2" stockCount="9"/>
       </availabilities>
       <price>15000</price>
+    </offer>
+    <offer sku="81849">
+      <model>Стол Пегас D110 (белый)</model>
+      <brand>Arto</brand>
+      <availabilities>
+        <availability available="no" storeId="PP2" stockCount="0"/>
+      </availabilities>
+      <price>65000</price>
     </offer>
   </offers>
 </kaspi_catalog>
