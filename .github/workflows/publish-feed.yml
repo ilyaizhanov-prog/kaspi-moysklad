@@ -5,7 +5,7 @@ name: Publish Kaspi feed and images
 # на вкладке Actions в репозитории.
 on:
   schedule:
-    - cron: "*/20 * * * *"
+    - cron: "7,27,47 * * * *"
   workflow_dispatch: {}
 
 permissions:
