@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<kaspi_catalog xmlns="kaspiShopping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" date="2026-11-21 07:26:38" xsi:schemaLocation="kaspiShopping http://kaspi.kz/kaspishopping.xsd">
+<kaspi_catalog xmlns="kaspiShopping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" date="2026-11-21 15:29:22" xsi:schemaLocation="kaspiShopping http://kaspi.kz/kaspishopping.xsd">
   <company>Ustel</company>
   <merchantid>Ustel</merchantid>
   <offers>
@@ -23,7 +23,7 @@
       <model>Стул Наполеон серый</model>
       <brand>Arto</brand>
       <availabilities>
-        <availability available="yes" storeId="PP2" stockCount="1"/>
+        <availability available="yes" storeId="PP2" stockCount="4"/>
       </availabilities>
       <price>15000</price>
     </offer>
@@ -31,7 +31,7 @@
       <model>Стол Пегас D110 (белый)</model>
       <brand>Arto</brand>
       <availabilities>
-        <availability available="no" storeId="PP2" stockCount="0"/>
+        <availability available="yes" storeId="PP2" stockCount="10"/>
       </availabilities>
       <price>65000</price>
     </offer>
